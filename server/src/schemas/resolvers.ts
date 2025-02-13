@@ -3,9 +3,6 @@
 const resolvers = {
     Query: {
         hello: () => 'Hello world!',
-    },
-    Mutation: {
-
     }
 }
 

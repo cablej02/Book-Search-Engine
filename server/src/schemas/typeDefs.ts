@@ -1,8 +1,8 @@
-const typeDefs =`
-  type Query {
-    hello: String
-    }
-    type Mutation {
+import { gql } from 'graphql-tag';
+
+const typeDefs = gql`
+    type Query {
+        hello: String
     }
 `;
 
