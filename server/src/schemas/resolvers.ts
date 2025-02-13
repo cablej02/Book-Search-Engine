@@ -48,7 +48,7 @@ const resolvers = {
             throw new AuthenticationError('You need to be logged in!');
         }
     },
-    Mutations: {
+    Mutation: {
         // login a user using email or username
         login: async (_parent: unknown, { email, password }: { email: string, password: string }): Promise<{ token: string, user: User }> => {
             const user = await User.findOne({ $or: [{ username: email }, { email: email }] });

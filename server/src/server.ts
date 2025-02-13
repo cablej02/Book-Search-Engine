@@ -12,8 +12,10 @@ import { authenticateToken } from './services/auth.js';
 const __dirname = path.resolve();
 
 const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+    typeDefs,
+    resolvers,
+    // enable introspection for dev environment (disabled by default in v4.11)
+    introspection: true,
 });
 
 const startApolloServer = async () => {
@@ -27,7 +29,7 @@ const startApolloServer = async () => {
     app.use(express.json());
 
     app.use('/graphql', expressMiddleware(server as any,
-        { context: authenticateToken as any}
+        { context: async ({ req }) => authenticateToken({ req })}
     ));
 
     if (process.env.NODE_ENV === 'production') {
