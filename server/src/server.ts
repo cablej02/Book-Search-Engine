@@ -15,7 +15,7 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     // enable introspection for dev environment (disabled by default in v4.11)
-    introspection: true,
+    introspection: process.env.NODE_ENV !== 'production',
 });
 
 const startApolloServer = async () => {
@@ -29,7 +29,7 @@ const startApolloServer = async () => {
     app.use(express.json());
 
     app.use('/graphql', expressMiddleware(server as any,
-        { context: async ({ req }) => authenticateToken({ req })}
+        { context: authenticateToken as any}
     ));
 
     if (process.env.NODE_ENV === 'production') {
