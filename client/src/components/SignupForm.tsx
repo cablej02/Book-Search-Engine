@@ -31,6 +31,7 @@ const SignupForm = ({}: { handleModalClose: () => void }) => {
     if (form.checkValidity() === false) {
       event.stopPropagation();
     }
+    console.log(userFormData);
 
     try {
       // use the addUser mutation to add a user

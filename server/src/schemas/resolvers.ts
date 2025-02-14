@@ -19,14 +19,6 @@ interface Book {
     link: string;
 }
 
-interface AddUserArgs {
-    input:{
-        username: string;
-        email: string;
-        password: string;
-    }
-}
-
 interface SaveBookArgs {
     bookData: Book;
 }
@@ -61,14 +53,14 @@ const resolvers = {
                 throw new AuthenticationError('Wrong password!');
             }
 
-            const token = signToken(user.username, user.password, user._id);
+            const token = signToken(user.username, user.email, user._id);
             return { token, user };
         },
 
         // create a new user
-        addUser: async (_parent: unknown, { input }: AddUserArgs): Promise<{ token: string, user: User }> => {
-            const user = await User.create({ ...input });
-            const token = signToken(user.username, user.password, user._id);
+        addUser: async (_parent: unknown, { username, email, password }: {username: string, email: string, password: string}): Promise<{ token: string, user: User }> => {
+            const user = await User.create({ username, email, password });
+            const token = signToken(user.username, user.email, user._id);
             return { token, user };
         },
 
